@@ -1,2 +1,2 @@
-# Jellyfin-SamsungSmart-Orsay
+# Jellyfin Samsung Smart Orsay
  Jellyfin Samsung Smart Orsay
