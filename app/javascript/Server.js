@@ -229,11 +229,11 @@ Server.getStreamUrl = function(itemId,mediaSourceId){
 
 Server.setRequestHeaders = function (xmlHttp,UserId) {
 	if (this.UserID == null) {
-		xmlHttp.setRequestHeader("Authorization", "MediaBrowser Client=\"Samsung TV\", Device=\""+this.Device+"\", DeviceId=\""+this.DeviceID+"\", Version=\""+Main.getVersion()+"\", UserId=\""+UserId+"\"");
+		xmlHttp.setRequestHeader("X-Authorization", "MediaBrowser Client=\"Samsung TV\", Device=\""+this.Device+"\", DeviceId=\""+this.DeviceID+"\", Version=\""+Main.getVersion()+"\", UserId=\""+UserId+"\"");
 	} else {
-		xmlHttp.setRequestHeader("Authorization", "MediaBrowser Client=\"Samsung TV\", Device=\""+this.Device+"\", DeviceId=\""+this.DeviceID+"\", Version=\""+Main.getVersion()+"\", UserId=\""+this.UserID+"\"");
+		xmlHttp.setRequestHeader("X-Authorization", "MediaBrowser Client=\"Samsung TV\", Device=\""+this.Device+"\", DeviceId=\""+this.DeviceID+"\", Version=\""+Main.getVersion()+"\", UserId=\""+this.UserID+"\"");
 		if (this.AuthenticationToken != null) {
-			xmlHttp.setRequestHeader("X-MediaBrowser-Token", this.AuthenticationToken);		
+			xmlHttp.setRequestHeader("X-Jellyfin-Token", this.AuthenticationToken);		
 		}
 	}
 	xmlHttp.setRequestHeader("Content-Type", 'application/json; charset=UTF-8');	
@@ -495,7 +495,7 @@ Server.DELETE = function(url, item) {
 Server.testConnectionSettings = function (server,fromFile) {	
 	xmlHttp = new XMLHttpRequest();
 	if (xmlHttp) {
-		xmlHttp.open("GET", "http://" + server + "/emby/System/Info/Public?format=json",false);
+		xmlHttp.open("GET", "http://" + server + "/System/Info/Public?format=json",false);
 		xmlHttp.setRequestHeader("Content-Type", 'application/json');
 		xmlHttp.onreadystatechange = function () {
 			GuiNotifications.setNotification("hello","Network Status",true);
@@ -506,7 +506,7 @@ Server.testConnectionSettings = function (server,fromFile) {
 			    		File.saveServerToFile(json.Id,json.ServerName,server); 
 			    	}
 			       	//Set Server.serverAddr!
-			       	Server.setServerAddr("http://" + server + "/emby");
+			       	Server.setServerAddr("http://" + server + "/web");
 			       	//Check Server Version
 			       	if (ServerVersion.checkServerVersion()) {
 			       		GuiUsers.start(true);
